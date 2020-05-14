@@ -12,7 +12,7 @@ var cash
 var totalAmount = 0
 var gainCash
 
-var dict = {};
+var sumOfBets = {};
 
 //Function to check win or loss 
 function dailyBet()
@@ -34,19 +34,13 @@ function dailyBet()
 
 //function for Monthly Bet
 function monthlyGambling() {
+    var day = 0
+    sumOfBets["Day "+day]=0
     for( day = 1; day <= TOTAL_DAYS; day++ ) {
         var cash = dailyBet()
         //storing Each Day amount in Dictionary
-        dict["Day "+day] = cash
-        totalAmount = totalAmount + dict["Day "+day]
-        console.log("Day "+day+" = "+dict["Day "+day])
-    }
-
-    if( totalAmount > 0 ) {
-        console.log("Total Amount Won In 20 Days "+totalAmount)
-    }
-    else {
-        console.log("Total Amount Loose in 20 Days "+totalAmount)
+        sumOfBets["Day "+day] = sumOfBets["Day "+(day-1)] + cash
+        console.log("Amount On Day "+day+" = "+sumOfBets["Day "+day])
     }
 }
 
