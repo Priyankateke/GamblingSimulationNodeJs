@@ -12,9 +12,12 @@ var cash
 var totalAmount = 0
 var gainCash
 
+//dictionary
 var sumOfBets = {};
 
-//Function to check win or loss 
+/**
+ * Function to check win or loss 
+ */
 function dailyBet()
 {
     gainCash=0
@@ -32,7 +35,9 @@ function dailyBet()
     return gainCash
 }
 
-//function for Monthly Bet
+/**
+ * function for Monthly Bet
+ */
 function monthlyGambling() {
     var day = 0
     sumOfBets["Day "+day]=0
@@ -44,25 +49,53 @@ function monthlyGambling() {
     sort()
 }
  
+/**
+ * Sort dictionary
+ */
 function sort() {
     // Create amount array
     var amount = Object.keys(sumOfBets).map(function(key) {
-    return [key, sumOfBets[key]];
+        return [key, sumOfBets[key]];
     });
-  
-  // Sort the array based on the second element
-  amount.sort(function(first, second) {
-    return second[1] - first[1];
-  });
-  
-  //display Luckiest Day
-  console.log("Luckiest Day : ")
-  console.log(amount.slice(0,1));
-
-  //display Unluckiest Day
-  console.log("Unluckiest Day : ")
-  console.log(amount.slice(amount.length-2, amount.length-1));
+    // Sort the array based on the second element
+    amount.sort(function(first, second) {
+        return second[1] - first[1];
+    });
+    
+    //display Luckiest Day
+    console.log("Luckiest Day : ")
+    console.log(amount.slice(0,1));
+    
+    //display Unluckiest Day
+    console.log("Unluckiest Day : ")
+    console.log(amount.slice(amount.length-2, amount.length-1));
 }
 
-//Start Game 
-monthlyGambling()
+/**
+ * Function To play game and check for next play
+ */
+function playNextMonth() {
+    
+   monthlyGambling()
+
+   var playAgain="n"
+
+   //If Last month amount greater than 0, ask for play again
+   while( sumOfBets['Day 20'] > 0) {
+       console.log("Last Month Balance : "+sumOfBets['Day 20'])
+       
+       //user input
+       const prompt = require('prompt-sync')();
+       playAgain = prompt('Do you want to play again?');
+
+       if(playAgain == "y") {
+           monthlyGambling()
+       }
+       else {
+           return
+       }
+   }
+}
+
+//Start Game
+playNextMonth()
